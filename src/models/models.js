@@ -2,22 +2,22 @@
 import { sequelize, DataTypes } from '../database/config.js';
 
 //Definir el modelo para la entidad Producto
-const Productos = sequelize.define('Productos', {
+const Product = sequelize.define('Productos', {
     id: {
-        type: sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     nombre: {
-        type: sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     descripcion: {
-        type: sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     precio: {
-        type: sequelize.DECIMAL(10, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     }
 }, {
@@ -31,20 +31,20 @@ const Productos = sequelize.define('Productos', {
 });
 
 // Definir el modelo para la entidad Comentario
-const Comentario = sequelize.define('Comentario', {
+const Comment = sequelize.define('Comentario', {
     id: {
-        type: sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     contenido: {
-        type: sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     fechaHora: {
-        type: sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.NOW
+        defaultValue: DataTypes.NOW
     }
 }, {
     timestamps: true,
@@ -56,29 +56,29 @@ const Comentario = sequelize.define('Comentario', {
 });
 
 // Definir el modelo para la entidad Usuario
-const Usuario = sequelize.define('Usuario', {
+const Users = sequelize.define('Usuario', {
     id: {
-        type: sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     nombre: {
-        type: sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     correoElectronico: {
-        type: sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
     contraseña: {
-        type: sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     fechaRegistro: {
-        type: sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.NOW
+        defaultValue: DataTypes.NOW
     }
 }, {
     timestamps: true,
@@ -90,17 +90,18 @@ const Usuario = sequelize.define('Usuario', {
 });
 
 // Definir relaciones entre entidades
-Productos.hasMany(Comentario, { foreignKey: 'id_producto' });
-Comentario.belongsTo(Productos, { foreignKey: 'id_producto' });
-Comentario.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+Product.hasMany(Comment, { foreignKey: 'id_producto' });
+Comment.belongsTo(Product, { foreignKey: 'id_producto' });
+Comment.belongsTo(Users, { foreignKey: 'id_usuario' });
 
 // Productos.sync()
-Productos.sync()
-Comentario.sync()
-Usuario.sync()
+Product.sync()
+Comment.sync()
+Users.sync()
+
 // Exportar los modelos
 export default {
-    Productos,
-    Comentario,
-    Usuario
+    Product,
+    Comment,
+    Users
 };

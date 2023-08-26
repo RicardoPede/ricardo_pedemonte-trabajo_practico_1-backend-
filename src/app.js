@@ -1,17 +1,19 @@
 import express from 'express';
-import join from 'path';
+import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import 'dotenv/config';
-import path from 'path';
 
 const app = express();
 const __dirname = path.dirname('.env');
 
 //variables de entorno
-// config({ path: '.env' });
-import router from './routes/index.routes.js';
+// dotenv.config({ path: '.env' });
+
+import usersRoutes from './routes/users.routes.js';
+import productsRoutes from './routes/products.routes.js';
+import commentsRoutes from './routes/comments.routes.js';
 
 //Se importa la instancia de conexión a la base de datos
 import { sequelize } from './database/config.js';
@@ -33,7 +35,9 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use('/', router);
+app.use('/', usersRoutes);
+app.use('/', productsRoutes);
+app.use('/', commentsRoutes);
 
 //Se ejecuta instancia de conexión a la base de datos
 sequelize.authenticate()
