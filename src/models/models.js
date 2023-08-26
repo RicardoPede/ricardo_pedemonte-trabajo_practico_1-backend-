@@ -90,9 +90,13 @@ const Users = sequelize.define('Usuario', {
 });
 
 // Definir relaciones entre entidades
-Product.hasMany(Comment, { foreignKey: 'id_producto' });
-Comment.belongsTo(Product, { foreignKey: 'id_producto' });
-Comment.belongsTo(Users, { foreignKey: 'id_usuario' });
+Users.hasMany(Product, { foreignKey: 'id_usuario' }); // Un usuario puede tener varios productos
+Product.belongsTo(Users, { foreignKey: 'id_usuario' }); // Un producto pertenece a un usuario
+
+Product.hasMany(Comment, { foreignKey: 'id_producto' }); // Un producto puede tener varios comentarios
+Comment.belongsTo(Product, { foreignKey: 'id_producto' }); // Un comentario pertenece a un producto
+
+Comment.belongsTo(Users, { foreignKey: 'id_usuario' }); // Un comentario pertenece a un usuario
 
 // Productos.sync()
 Product.sync()
