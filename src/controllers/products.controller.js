@@ -6,25 +6,6 @@ import { Op } from 'sequelize';
 import verify from 'jsonwebtoken';
 import { promisify } from 'util';
 
-//VISTAS
-const indexView = (_req, res) => {
-    res.json('products/index');
-};
-
-const showView = (req, res) => {
-    const productId = req.params.id;
-    res.json('products/show', { id: productId });
-};
-
-const createView = (_req, res) => {
-    res.json('products/create');
-};
-
-const editView = (req, res) => {
-    const productId = req.params.id;
-    res.json('products/edit', { id: productId });
-};
-
 //APIS
 const index = async (req, res) => {
     const { nombre, descripcion, precio } = req.query;

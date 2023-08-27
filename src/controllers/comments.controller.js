@@ -1,11 +1,6 @@
 import Comment from '../models/models.js';
 import Op from 'sequelize';
 
-//VISTAS
-const indexView = (_req, res) => {
-    res.json('comments/index');
-};
-
 //APIS
 const index = async (req, res) => {
 

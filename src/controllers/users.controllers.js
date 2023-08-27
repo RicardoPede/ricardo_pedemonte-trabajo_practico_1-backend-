@@ -1,14 +1,5 @@
 import Users from '../models/models.js';
 
-const indexView = (req, res) => {
-    res.json(Users)
-};
-
-const showView = (req, res) => {
-    const userId = req.params.id;
-    res.json('users/showdate', { id: userId });
-};
-
 const index = async (req, res) => {
     try {
         const users = await Users();
@@ -51,8 +42,6 @@ const show = async (req, res) => {
 
 
 export {
-    indexView,
     index,
-    showView,
     show
 };

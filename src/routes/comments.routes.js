@@ -1,11 +1,8 @@
 import { Router } from "express";
 
-import { indexView, index } from "../controllers/comments.controller.js";
+import index from "../controllers/comments.controller.js";
 
 const router = Router();
-
-//Vistas
-router.get("/comments", indexView);
 
 // API CRUD
 router.get("/api/comments", index);
