@@ -1,7 +1,12 @@
 import Users from '../models/models.js';
 
 const indexView = (req, res) => {
-    res.render('users/index')
+    res.json(Users)
+};
+
+const showView = (req, res) => {
+    const userId = req.params.id;
+    res.json('users/showdate', { id: userId });
 };
 
 const index = async (req, res) => {
@@ -23,7 +28,31 @@ const index = async (req, res) => {
     }
 }
 
+const show = async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const user = await Users.findByPk(userId);
+
+        if (!user) {
+            throw {
+                status: 404,
+                message: "No existe el usuario con el id " + userId,
+            };
+        }
+
+        return res.json(user);
+    } catch (error) {
+        return res
+            .status(error.status || 500)
+            .json(error.message || "Error interno del servidor");
+    }
+};
+
+
 export {
     indexView,
-    index
+    index,
+    showView,
+    show
 };

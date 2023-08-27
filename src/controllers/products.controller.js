@@ -1,29 +1,28 @@
-import Products from '../models/models.js';
-import Comments from '../models/models.js';
+import Product from '../models/models.js';
+import Comment from '../models/models.js';
 import Users from '../models/models.js';
 import { Op } from 'sequelize';
 
 import verify from 'jsonwebtoken';
 import { promisify } from 'util';
-import ProductsComments from '../models/models.js';
 
 //VISTAS
 const indexView = (_req, res) => {
-    res.render('products/index');
+    res.json('products/index');
 };
 
 const showView = (req, res) => {
     const productId = req.params.id;
-    res.render('products/show', { id: productId });
+    res.json('products/show', { id: productId });
 };
 
 const createView = (_req, res) => {
-    res.render('products/create');
+    res.json('products/create');
 };
 
 const editView = (req, res) => {
     const productId = req.params.id;
-    res.render('products/edit', { id: productId });
+    res.json('products/edit', { id: productId });
 };
 
 //APIS
@@ -48,9 +47,9 @@ const index = async (req, res) => {
         const products = await Product.findAll({
             where: whereClausule,
             include: {
-                model: Comments,
+                model: Comment,
             },
-            order: [[Comments, ProductsComments, 'dateprecio', 'DESC']],
+            order: [[Comment, 'dateprecio', 'DESC']],
         });
 
         if (!products || products.length === 0) {
@@ -72,11 +71,11 @@ const show = async (req, res) => {
     const productId = req.params.id;
 
     try {
-        const product = await Products.findByPk(productId, {
+        const product = await Product.findByPk(productId, {
             include: {
-                model: Comments
+                model: Comment
             },
-            order: [[Comments, ProductsComments, 'dateprecio', 'DESC']],
+            order: [[Comment, 'dateprecio', 'DESC']],
         });
 
         console.log(product);
@@ -113,7 +112,7 @@ const store = async (req, res) => {
 
     try {
         const [product, created] = await Product.findOrCreate({
-            where: { dni: dni },
+            where: { nombre: nombre },
             defaults: {
                 nombre,
                 descripcion,
@@ -145,7 +144,7 @@ const update = async (req, res) => {
         precio,
     } = req.body;
     try {
-        const product = await Prodruct.findByPk(productId);
+        const product = await Product.findByPk(productId);
         product.update({
             nombre,
             descripcion,
@@ -167,7 +166,7 @@ const destroy = async (req, res) => {
                 id: productId,
             },
         });
-        return res.json({ Product, message: 'producto eliminado correctamente.' });
+        return res.json({ product, message: 'producto eliminado correctamente.' });
     } catch (error) {
         return res
             .status(error.status || 500)

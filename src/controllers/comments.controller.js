@@ -3,7 +3,7 @@ import Op from 'sequelize';
 
 //VISTAS
 const indexView = (_req, res) => {
-    res.render('comments/index');
+    res.json('comments/index');
 };
 
 //APIS

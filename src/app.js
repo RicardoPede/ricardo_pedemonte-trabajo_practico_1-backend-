@@ -14,6 +14,7 @@ const __dirname = path.dirname('.env');
 import usersRoutes from './routes/users.routes.js';
 import productsRoutes from './routes/products.routes.js';
 import commentsRoutes from './routes/comments.routes.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
 
 //Se importa la instancia de conexión a la base de datos
 import { sequelize } from './database/config.js';
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/', usersRoutes);
 app.use('/', productsRoutes);
 app.use('/', commentsRoutes);
+app.use('/', dashboardRoutes);
 
 //Se ejecuta instancia de conexión a la base de datos
 sequelize.authenticate()
