@@ -116,7 +116,4 @@ const index = async (req, res) => {
 //     }
 // };
 
-export {
-    indexView,
-    index
-};
+export default index;

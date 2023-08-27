@@ -38,7 +38,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/', usersRoutes);
 app.use('/', productsRoutes);
 app.use('/', commentsRoutes);
-app.use('/', dashboardRoutes);
 
 //Se ejecuta instancia de conexión a la base de datos
 sequelize.authenticate()

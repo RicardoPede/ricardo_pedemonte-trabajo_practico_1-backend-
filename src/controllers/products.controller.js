@@ -86,19 +86,13 @@ const store = async (req, res) => {
         comentario,
     } = req.body;
 
-    const jwtDecodificado = await promisify(verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRET
-    );
-
     try {
         const [product, created] = await Product.findOrCreate({
             where: { nombre: nombre },
             defaults: {
                 nombre,
                 descripcion,
-                precio,
-                userId: jwtDecodificado.id,
+                precio
             },
         });
 
@@ -156,10 +150,6 @@ const destroy = async (req, res) => {
 };
 
 export {
-    indexView,
-    showView,
-    editView,
-    createView,
     index,
     show,
     store,
