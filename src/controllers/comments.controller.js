@@ -1,4 +1,4 @@
-import { Comment } from '../models/models.js';
+import Comment from '../models/modelsComments.js';
 
 const index = async (req, res) => {
     try {

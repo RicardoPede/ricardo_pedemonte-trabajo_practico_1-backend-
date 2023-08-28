@@ -17,6 +17,7 @@ import commentsRoutes from './routes/comments.routes.js';
 
 //Se importa la instancia de conexión a la base de datos
 import { sequelize } from './database/config.js';
+import relaciones from './models/modelsRelations.js';
 
 //Middlewares
 app.use(cors());
@@ -43,6 +44,7 @@ app.use('/', commentsRoutes);
 sequelize.authenticate()
     .then(() => {
         console.log('Conexión a base de datos exitosa');
+        relaciones()
     })
     .catch((error) => console.log('Error al conectar a base de datos', error));
 
@@ -50,7 +52,7 @@ sequelize.authenticate()
 app.use((req, res, next) => {
     return res.status(404).json({
         message: "pagina no encontrada"
-    });   
+    });
 })
 
 // Starting the server

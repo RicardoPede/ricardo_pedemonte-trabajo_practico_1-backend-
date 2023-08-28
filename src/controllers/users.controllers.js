@@ -1,4 +1,5 @@
-import { Users } from '../models/models.js';
+import Users from '../models/modelsUsers.js';
+import bcryptjs from 'bcryptjs';
 
 const index = async (req, res) => {
     try {
@@ -44,8 +45,10 @@ const store = async (req, res) => {
     const {
         nombre,
         correoElectronico,
-        contraseña
+        password
     } = req.body;
+
+    let passHash = await bcryptjs.hash(password, 8);
 
     try {
         const existeUser = await Users.findOne({
@@ -61,7 +64,7 @@ const store = async (req, res) => {
         const nuevoUsers = new Users({
             nombre,
             correoElectronico,
-            contraseña
+            password: passHash
         });
 
         const createUser = nuevoUsers.save();
