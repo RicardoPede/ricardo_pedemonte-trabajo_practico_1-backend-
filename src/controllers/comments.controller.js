@@ -18,26 +18,4 @@ const index = async (req, res) => {
     }
 };
 
-// const show = async (req, res) => {
-//     const commentId = req.params.id;
-
-//     try {
-//         const comment = await Comment.findByPk(commentId);
-
-
-//         if (!comment) {
-//             throw {
-//                 status: 404,
-//                 message: 'No existe el comentario con el id ' + commentId,
-//             };
-//         }
-
-//         return res.json(comment);
-//     } catch (error) {
-//         return res
-//             .status(error.status || 500)
-//             .json(error.message || 'Error interno del servidor');
-//     }
-// };
-
 export {index};
