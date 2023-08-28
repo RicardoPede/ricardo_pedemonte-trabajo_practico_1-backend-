@@ -40,8 +40,50 @@ const show = async (req, res) => {
     }
 };
 
+const store = async (req, res) => {
+    const {
+        nombre,
+        correoElectronico,
+        contraseña
+    } = req.body;
+
+    try {
+        const existeUser = await Users.findOne({
+            where: { correoElectronico }
+        });
+        if (existeUser) {
+            throw ({
+                status: 400,
+                message: 'El correo electrónico ya existe con otro Usuario'
+            })
+        };
+
+        const nuevoUsers = new Users({
+            nombre,
+            correoElectronico,
+            contraseña
+        });
+
+        const createUser = nuevoUsers.save();
+        if (!createUser) {
+            throw ({
+                message: 'Error al crear el usuario'
+            })
+        }
+        return res.status(201).json({
+            message: 'Usuario creado correctamente'
+        })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(error.status || 500).json({
+            message: error.message || 'Error al crear el usuario'
+        })
+    }
+}
 
 export {
     index,
-    show
+    show,
+    store
 };

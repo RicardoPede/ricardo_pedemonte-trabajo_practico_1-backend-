@@ -19,9 +19,13 @@ const Product = sequelize.define('Productos', {
     precio: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
+    },
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
     }
-}, {
-    // Habilitar la creación automática de createdAt y updatedAt
+},{
+// Habilitar la creación automática de createdAt y updatedAt
     timestamps: true,
     sequelize,
     paranoid: true,
@@ -45,8 +49,16 @@ const Comment = sequelize.define('Comentario', {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
-    }
-}, {
+    },
+    id_producto: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+}
+},{
     timestamps: true,
     sequelize,
     paranoid: true,
