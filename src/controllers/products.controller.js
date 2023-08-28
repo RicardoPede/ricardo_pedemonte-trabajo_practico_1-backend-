@@ -1,36 +1,15 @@
-import Product from '../models/models.js';
-import Comment from '../models/models.js';
-import Users from '../models/models.js';
-import { Op } from 'sequelize';
+import { Product, Users } from '../models/models.js';
+import { Comment } from '../models/models.js';
 
-import verify from 'jsonwebtoken';
-import { promisify } from 'util';
-
-//APIS
 const index = async (req, res) => {
-    const { nombre, descripcion, precio } = req.query;
-
-    let whereClausule;
-
-    if (Object.keys(req.query).length !== 0) {
-        whereClausule = {
-            nombre: {
-                [Op.like]: `%${nombre}%`,
-            },
-            descripcion: {
-                [Op.like]: `%${descripcion}%`,
-            },
-            precio,
-        };
-    }
-
+    
     try {
         const products = await Product.findAll({
-            where: whereClausule,
             include: {
                 model: Comment,
+                include: Users,
             },
-            order: [[Comment, 'dateprecio', 'DESC']],
+            order: [[Comment, 'createdAt', 'DESC']],
         });
 
         if (!products || products.length === 0) {
@@ -56,7 +35,7 @@ const show = async (req, res) => {
             include: {
                 model: Comment
             },
-            order: [[Comment, 'dateprecio', 'DESC']],
+            order: [[Comment, 'createdAt', 'DESC']],
         });
 
         console.log(product);
@@ -82,17 +61,19 @@ const store = async (req, res) => {
         nombre,
         descripcion,
         precio,
-        usuario,
-        comentario,
+        id_usuario,
+        id_comentario,
     } = req.body;
 
     try {
         const [product, created] = await Product.findOrCreate({
-            where: { nombre: nombre },
+            where: { id_usuario: id_usuario, nombre: nombre, descripcion: descripcion },
             defaults: {
                 nombre,
                 descripcion,
-                precio
+                precio,
+                id_usuario,
+                id_comentario
             },
         });
 

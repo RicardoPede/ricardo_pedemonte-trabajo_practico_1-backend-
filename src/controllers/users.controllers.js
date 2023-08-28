@@ -1,8 +1,8 @@
-import Users from '../models/models.js';
+import { Users } from '../models/models.js';
 
 const index = async (req, res) => {
     try {
-        const users = await Users();
+        const users = await Users.findAll();
 
         if (!users || users.length === 0) {
             throw ({

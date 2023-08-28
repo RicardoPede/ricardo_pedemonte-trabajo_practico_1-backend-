@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import index from "../controllers/comments.controller.js";
+import { index } from "../controllers/comments.controller.js";
 
 const router = Router();
 

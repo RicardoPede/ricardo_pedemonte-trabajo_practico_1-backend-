@@ -104,7 +104,7 @@ Comment.sync()
 Users.sync()
 
 // Exportar los modelos
-export default {
+export {
     Product,
     Comment,
     Users
